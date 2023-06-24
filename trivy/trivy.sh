@@ -1,10 +1,13 @@
 #!/bin/bash
-trivy --version > /dev/null 2&>1
-rm -rf trivy_0.18.3* > /dev/null 2&>1
+binary=`sudo rpm -qa | grep trivy`
+sudo rm -rf trivy_0.18.3* > /dev/null 2&>1
 install=`sudo rpm -ivh https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.rpm`
-if [[ $? != 0 ]]
+echo $binary
+if [[ $binary != 0 ]]
 then 
-    $install
+    $install > /dev/null 2&>1
+else 
+    echo "already installed"
 fi
 
 #docker pull postgres:latest
